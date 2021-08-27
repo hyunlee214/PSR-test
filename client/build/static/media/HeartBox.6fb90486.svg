@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="40.228" height="39.831" viewBox="0 0 40.228 39.831">
+  <g id="그룹_233" data-name="그룹 233" transform="translate(1.25 0)">
+    <g id="Icon_feather-inbox" data-name="Icon feather-inbox" transform="translate(0 8.398)">
+      <path id="패스_1004" data-name="패스 1004" d="M40.728,18H29.41l-3.773,5.659H18.091L14.318,18H3" transform="translate(-3 -2.909)" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"/>
+      <path id="패스_1005" data-name="패스 1005" d="M9.508,8.094,3,21.091V32.41a3.773,3.773,0,0,0,3.773,3.773H36.955a3.773,3.773,0,0,0,3.773-3.773V21.091l-6.508-13A3.773,3.773,0,0,0,30.843,6H12.885A3.773,3.773,0,0,0,9.508,8.094Z" transform="translate(-3 -6)" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"/>
+    </g>
+    <path id="Icon_awesome-heart" data-name="Icon awesome-heart" d="M24.318,3.949A6.922,6.922,0,0,0,14.5,4.7L13.466,5.833,12.43,4.7a6.922,6.922,0,0,0-9.815-.755A8.286,8.286,0,0,0,2.093,15.5L12.272,26.6a1.589,1.589,0,0,0,2.383,0L24.833,15.5a8.281,8.281,0,0,0-.515-11.549Z" transform="translate(5.398 -2.248)" fill="#f15656"/>
+  </g>
+</svg>

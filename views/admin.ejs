@@ -1,0 +1,61 @@
+<html>
+  <head><title><%= title %> Page</title></head>
+  <body>
+    <p><a href="/admin">홈으로</a></p>
+    <p><a href="/admin/createRoom">방추가</a></p>
+    <p><a href="/admin/createPictures">사진추가</a></p>
+    <div id="rooms">
+    </div>
+  </body>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      readRoom();
+    })
+    const readRoom = () => {
+      let xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState === xhr.DONE) {
+          if (xhr.status === 200 || xhr.status === 201) {
+            let {result} = JSON.parse(xhr.responseText)
+            result = result.map(r => {
+              return `<tr><td><a href="/admin/updateRoom/${r.id}">수정하기</a></td><td><button type="button" onclick="handleDelete(${r.id}, '${r.name}')">X</button></td><td>${r.id}</td><td>${r.name}</td><td>${r.phone}</td><td>${r.latitude}</td><td>${r.longitude}</td><td>${r.yearPrice}</td><td>${r.halfPrice}</td><td>${r.monthPrice}</td><td>${r.fee}</td><td>${r.charterPrice}</td><td>${r.maintenaceCost}</td><td>${r.isMany}</td><td>${r.isWatertax}</td><td>${r.isElectax}</td><td>${r.isGastax}</td><td>${r.gasType}</td><td>${r.gasrangeType}</td><td>${r.address}</td><td>${r.isBed}</td><td>${r.isFrige}</td><td>${r.isAircon}</td><td>${r.isWasher}</td><td>${r.isVeranda}</td><td>${r.isTV}</td><td>${r.isDesk}</td><td>${r.isMicrowave}</td><td>${r.isRouter}</td><td>${r.isElevator}</td><td>${r.isCctv}</td><td>${r.isPostbox}</td><td>${r.isParking}</td><td>${r.isFireFacility}</td><td>${r.isLH}</td><td>${r.isPet}</td><td>${r.isVisible}</td><td>${r.createdAt}</td><td>${r.updatedAt}</td><td>${r.locationId}</td></tr>`
+            })
+            let html = `
+              <table border="1">
+                <thead><th>수정하기</th><th>삭제하기</th><th>id</th><th>name</th><th>phone</th><th>latitude</th><th>longitude</th><th>yearPrice</th><th>halfPrice</th><th>monthPrice</th><th>fee</th><th>charterPrice</th><th>maintenaceCost</th><th>isMany</th><th>isWatertax</th><th>isElectax</th><th>isGastax</th><th>gasType</th><th>gasrangeType</th><th>address</th><th>isBed</th><th>isFrige</th><th>isAircon</th><th>isWasher</th><th>isVeranda</th><th>isTV</th><th>isDesk</th><th>isMicrowave</th><th>isRouter</th><th>isElevator</th><th>isCctv</th><th>isPostbox</th><th>isParking</th><th>isFireFacility</th><th>isLH</th><th>isPet</th><th>isVisible</th><th>createdAt</th><th>updatedAt</th><th>locationId</th></thead>
+                <tbody>
+                  ${result}
+                </tbody>
+              </table>
+            `
+            document.getElementById("rooms").innerHTML = html
+          }
+        }
+      };
+      xhr.open('GET', '/user/room/read');
+      xhr.send();
+    }
+
+    const deleteRoom = (id) => {
+      let xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = () => {
+        if (xhr.resadyState === xhr.DONE) {
+          if(xhr.status === 200 || xhr.status === 201) {
+            alert("삭제되었습니다");
+            location.href = '/admin';
+          } else {
+            alert("오류 발생.. 스스로 해결해 보십시오");
+          }
+        }
+      }
+      xhr.open('GET', `/admin/room/delete/${id}`)
+      xhr.send()
+    }
+
+    const handleDelete = (id, name) => {
+      if(confirm(name + "을(를) 정말로 삭제하시겠습니까? 되돌릴 수 없어요.")) {
+        deleteRoom(id);
+      }
+    }
+  </script>
+</html>

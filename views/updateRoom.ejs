@@ -1,0 +1,106 @@
+<html>
+  <head><title>admin Page</title></head>
+  <body>
+    <p><a href="/admin">홈으로</a></p>
+    <div id="url"></div>
+    <form action = "/admin/room/update" method="post">
+      <p>방번호 : <input type="text" name="id" readonly></p>
+      <p>방이름 : <input type="text" name="name" ></p>
+      <p>사장님번호 : <input type="text" name="phone" ></p>
+      <p>위도 : <input type="text" name="latitude" ></p>
+      <p>경도 : <input type="text" name="longitude" ></p>
+      <p>년세 : <input type="text" name="yearPrice" ></p>
+      <p>반년세  : <input type="text" name="halfPrice" ></p>
+      <p>월세 : <input type="text" name="monthPrice" ></p>
+      <p>보증금 : <input type="text" name="fee" ></p>
+      <p>전세 : <input type="text" name="charterPrice" ></p>
+      <p>전세 관리비 : <input type="text" name="maintenaceCost" ></p>
+      <p>최대 거주인원: 1인 <input type="radio" name="isMany" value="0" checked> 2인 <input type="radio" name="isMany" value="1"> 3인 이상 <input type="radio" name="isMany" value="2"></p>
+      <p>도로명 주소 : <input type="text" name="address" ></p>
+      <p>사장님의 한마디 : <textarea cols="55" rows="10" name="comment"></textarea></p>
+      <p>수도세 여부: O <input type="radio" name="isWatertax" value="1">X<input type="radio" name="isWatertax" value="0" ></p>
+      <p>전기세 여부: O <input type="radio" name="isElectax" value="1">X<input type="radio" name="isElectax" value="0" ></p>
+      <p>가스세 여부: O <input type="radio" name="isGastax" value="1">X<input type="radio" name="isGastax" value="0" ></p>
+      <p>가스 타입: 도시가스 <input type="radio" name="gasType" value="0"> 심야전기 <input type="radio" name="gasType" value="1"> LPG가스 <input type="radio" name="gasType" value="2" ></p>
+      <p>가스레인지 타입: 없음 <input type="radio" name="gasrangeType" value="0"> 가스레인지 <input type="radio" name="gasrangeType" value="1"> 전기레인지 <input type="radio" name="gasrangeType" value="2" ></p>
+      <p>침대 여부: O <input type="radio" name="isBed" value="1">X<input type="radio" name="isBed" value="0" ></p>
+      <p>냉장고 여부: O <input type="radio" name="isFrige" value="1">X<input type="radio" name="isFrige" value="0" ></p>
+      <p>에어컨 여부: O <input type="radio" name="isAircon" value="1">X<input type="radio" name="isAircon" value="0" ></p>
+      <p>세탁기 여부: O <input type="radio" name="isWasher" value="1">X<input type="radio" name="isWasher" value="0" ></p>
+      <p>베란다 여부: O <input type="radio" name="isVeranda" value="1">X<input type="radio" name="isVeranda" value="0" ></p>
+      <p>티비 여부: O <input type="radio" name="isTV" value="1">X<input type="radio" name="isTV" value="0" ></p>
+      <p>책상 여부: O <input type="radio" name="isDesk" value="1">X<input type="radio" name="isDesk" value="0" ></p>
+      <p>전자레인지 여부: O <input type="radio" name="isMicrowave" value="1">X<input type="radio" name="isMicrowave" value="0" ></p>
+      <p>공유기 여부: O <input type="radio" name="isRouter" value="1">X<input type="radio" name="isRouter" value="0" ></p>
+      <p>엘레베이터 여부: O <input type="radio" name="isElevator" value="1">X<input type="radio" name="isElevator" value="0" ></p>
+      <p>cctv 여부: O <input type="radio" name="isCctv" value="1">X<input type="radio" name="isCctv" value="0" ></p>
+      <p>무인택배함 여부: O <input type="radio" name="isPostbox" value="1">X<input type="radio" name="isPostbox" value="0" ></p>
+      <p>주차장 여부: O <input type="radio" name="isParking" value="1">X<input type="radio" name="isParking" value="0" ></p>
+      <p>소방시설 여부: O <input type="radio" name="isFireFacility" value="1">X<input type="radio" name="isFireFacility" value="0" ></p>
+      <p>LH 여부: O <input type="radio" name="isLH" value="1">X<input type="radio" name="isLH" value="0" ></p>
+      <p>반려동물 여부: O <input type="radio" name="isPet" value="1">X<input type="radio" name="isPet" value="0" ></p>
+      <p>핀 아래 이름 기입 여부: O <input type="radio" name="isVisible" value="1"checked >X<input type="radio" name="isVisible" value="0" ></p>
+      <p>구역번호 : <input type="text" name="locationId" ></p>
+      <p>
+        <input type="submit" value="Submit">
+        <input type="reset" value="Reset">
+      </p>
+    </form>
+  </body>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      readRoom();
+    })
+    const readRoom = () => {
+      let xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState === xhr.DONE) {
+          if (xhr.status === 200 || xhr.status === 201) {
+            let { result } = JSON.parse(xhr.responseText)
+            document.getElementById("url").innerHTML = `<a href="/admin/readPictures/${result.id}">사진정보</a>`
+
+            document.getElementsByName("id")[0].value = result.id;
+            document.getElementsByName("name")[0].value = result.name;
+            document.getElementsByName("phone")[0].value = result.phone;
+            document.getElementsByName("latitude")[0].value = result.latitude;
+            document.getElementsByName("longitude")[0].value = result.longitude;
+            document.getElementsByName("yearPrice")[0].value = result.yearPrice;
+            document.getElementsByName("halfPrice")[0].value = result.halfPrice;
+            document.getElementsByName("monthPrice")[0].value = result.monthPrice;
+            document.getElementsByName("fee")[0].value = result.fee;
+            document.getElementsByName("charterPrice")[0].value = result.charterPrice;
+            document.getElementsByName("maintenaceCost")[0].value = result.maintenaceCost;
+            document.getElementsByName("isMany")[result.isMany].checked= true
+            document.getElementsByName("address")[0].value = result.address;
+            document.getElementsByName("comment")[0].value = result.comment;
+            document.getElementsByName("locationId")[0].value = result.locationId;
+            document.getElementsByName("isWatertax")[!result.isWatertax * !result.isWatertax].checked= true
+            document.getElementsByName("isElectax")[!result.isElectax * !result.isElectax].checked= true
+            document.getElementsByName("isGastax")[!result.isGastax * !result.isGastax].checked= true
+            document.getElementsByName("gasType")[result.gasType].checked= true
+            document.getElementsByName("gasrangeType")[result.gasrangeType].checked= true
+            document.getElementsByName("isBed")[!result.isBed * !result.isBed].checked= true
+            document.getElementsByName("isFrige")[!result.isFrige * !result.isFrige].checked= true
+            document.getElementsByName("isAircon")[!result.isAircon * !result.isAircon].checked= true
+            document.getElementsByName("isWasher")[!result.isWasher * !result.isWasher].checked= true
+            document.getElementsByName("isVeranda")[!result.isVeranda * !result.isVeranda].checked= true
+            document.getElementsByName("isTV")[!result.isTV * !result.isTV].checked= true
+            document.getElementsByName("isDesk")[!result.isDesk * !result.isDesk].checked= true
+            document.getElementsByName("isMicrowave")[!result.isMicrowave * !result.isMicrowave].checked= true
+            document.getElementsByName("isRouter")[!result.isRouter * !result.isRouter].checked= true
+            document.getElementsByName("isElevator")[!result.isElevator * !result.isElevator].checked= true
+            document.getElementsByName("isCctv")[!result.isCctv * !result.isCctv].checked= true
+            document.getElementsByName("isPostbox")[!result.isPostbox * !result.isPostbox].checked= true
+            document.getElementsByName("isParking")[!result.isParking * !result.isParking].checked= true
+            document.getElementsByName("isFireFacility")[!result.isFireFacility * !result.isFireFacility].checked= true
+            document.getElementsByName("isLH")[!result.isLH * !result.isLH].checked= true
+            document.getElementsByName("isPet")[!result.isPet * !result.isPet].checked= true
+            document.getElementsByName("isVisible")[!result.isVisible * !result.isVisible].checked= true
+          }
+        }
+      };
+      xhr.open('GET', '/user/room/read/' + document.location.pathname.split("/")[3]);
+      xhr.send();
+    }
+  </script>
+</html>

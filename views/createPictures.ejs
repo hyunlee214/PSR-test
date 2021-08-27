@@ -1,0 +1,14 @@
+<html>
+  <head><title>admin Page</title></head>
+  <body>
+    <p><a href="/admin">홈으로</a></p>
+    <form name = "pictures" action = "/admin/pictures/create" enctype="multipart/form-data" method = "post">
+      <p>방이름 : <input type="text" name="name" ></p>
+      <p>사진: <input type="file" name="uploadImage" accept="image/jpg, image/jpeg, image/png" multiple></p>
+      <p>
+        <input type="submit" value="Upload">
+        <input type="reset" value="Reset">
+      </p>
+    </form>
+  </body>
+</html>

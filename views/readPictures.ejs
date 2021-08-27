@@ -1,0 +1,60 @@
+<html>
+  <head><title><%= title %> Page</title></head>
+  <body>
+    <p><a href="/admin">홈으로</a></p>
+    <div id="pictures">
+    </div>
+  </body>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      readPictures();
+    })
+    const readPictures = () => {
+      let xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState === xhr.DONE) {
+          if (xhr.status === 200 || xhr.status === 201) {
+            let {result} = JSON.parse(xhr.responseText)
+            result = result.map(r => {
+              return `<tr><td><img src="/${r.src}" alt="${r.file}"></td><td><button type="button" onclick="handleDelete(${r.id}, '${r.file}')">X</button></td></tr>`
+            })
+            let html = `
+              <table border="1">
+                <thead><th>사진</th><th>삭제하기</th></thead>
+                <tbody>
+                  ${result}
+                </tbody>
+              </table>
+            `
+
+            document.getElementById("pictures").innerHTML = html
+          }
+        }
+      };
+      xhr.open('GET', '/user/pictures/read/' + document.location.pathname.split("/")[3]);
+      xhr.send();
+    }
+
+    const deletePictures = (id) => {
+      let xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = () => {
+        if (xhr.resadyState === xhr.DONE) {
+          if(xhr.status === 200 || xhr.status === 201) {
+            alert("삭제되었습니다");
+            location.href = '/admin';
+          } else {
+            alert("오류 발생.. 스스로 해결해 보십시오");
+          }
+        }
+      }
+      xhr.open('GET', `/admin/pictures/delete/${id}`)
+      xhr.send()
+    }
+
+    const handleDelete = (id, file) => {
+      if(confirm(file + "을(를) 정말로 삭제하시겠습니까? 되돌릴 수 없어요.")) {
+        deletePictures(id);
+      }
+    }
+  </script>
+</html>
